@@ -1,0 +1,38 @@
+#include<iostream>
+using namespace std;
+class Node{
+    public:
+    int data;
+    Node*left;
+    Node*right;
+    Node(int val){
+        data=val;
+        left=NULL;
+        right=NULL;
+    }
+};
+bool isBST(Node*root,Node*min,Node*max){
+    if(root==NULL){
+        return true;
+    }
+    if(min!=NULL&&root->data<=min->data){
+        return false;
+    }
+    if(max!=NULL&&root->data>=max->data){
+        return false;
+    }
+    bool leftValid=isBST(root->left,min,root);
+    bool rightValid=isBST(root->right,root,max);
+    return (leftValid && rightValid);
+}
+int main(){
+    Node*root1=new Node(5);
+    root1->left=new Node(2);
+    root1->right=new Node(6);
+    if(isBST(root1,NULL,NULL)){
+        cout<<"Valid BST\n";
+    }else{
+        cout<<"Not a valid BST\n";
+    }
+    return 0;
+}
